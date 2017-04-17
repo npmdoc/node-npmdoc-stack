@@ -1,0 +1,453 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/creationix/stack#readme"
+
+    >stack (v0.1.0)</a>
+</h1>
+<h4>Stack is a minimal http module system for node.js</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.stack">module stack</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.stack">
+            function <span class="apidocSignatureSpan"></span>stack
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.compose">
+            function <span class="apidocSignatureSpan">stack.</span>compose
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.errorHandler">
+            function <span class="apidocSignatureSpan">stack.</span>errorHandler
+            <span class="apidocSignatureSpan">(req, res, err)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.mount">
+            function <span class="apidocSignatureSpan">stack.</span>mount
+            <span class="apidocSignatureSpan">(mountpoint)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.toString">
+            function <span class="apidocSignatureSpan">stack.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.stack.compose">module stack.compose</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.compose.compose">
+            function <span class="apidocSignatureSpan">stack.</span>compose
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.stack.errorHandler">module stack.errorHandler</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.errorHandler.errorHandler">
+            function <span class="apidocSignatureSpan">stack.</span>errorHandler
+            <span class="apidocSignatureSpan">(req, res, err)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.stack.mount">module stack.mount</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.mount.mount">
+            function <span class="apidocSignatureSpan">stack.</span>mount
+            <span class="apidocSignatureSpan">(mountpoint)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.stack.toString">module stack.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.stack.toString.toString">
+            function <span class="apidocSignatureSpan">stack.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.stack" id="apidoc.module.stack">module stack</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.stack.stack" id="apidoc.element.stack.stack">
+        function <span class="apidocSignatureSpan"></span>stack
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Stack() {
+  var error = Stack.errorHandler,
+      handle = error;
+  Array.prototype.slice.call(arguments).reverse().forEach(function (layer) {
+    var child = handle;
+    handle = function (req, res) {
+      try {
+        layer(req, res, function (err) {
+          if (err) { return error(req, res, err); }
+          child(req, res);
+        });
+      } catch (err) {
+        error(req, res, err);
+      }
+    };
+  });
+  return handle;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.stack.compose" id="apidoc.element.stack.compose">
+        function <span class="apidocSignatureSpan">stack.</span>compose
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function compose() {
+  // Don&#x27;t bother composing singletons
+  if (arguments.length == 1) { return arguments[0]; }
+
+  var stack = core;
+  Array.prototype.slice.call(arguments).reverse().forEach(function (layer) {
+
+    var child = stack;
+    stack = function (req, res, next) {
+      try {
+        layer(req, res, function (err) {
+          if (err) { return next(err); }
+          child(req, res, next);
+        });
+      } catch (err) {
+        next(err);
+      }
+    };
+
+  });
+
+  return stack;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.stack.errorHandler" id="apidoc.element.stack.errorHandler">
+        function <span class="apidocSignatureSpan">stack.</span>errorHandler
+        <span class="apidocSignatureSpan">(req, res, err)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function error(req, res, err) {
+  if (err) {
+    console.error(err.stack);
+    res.writeHead(500, {&#x22;Content-Type&#x22;: &#x22;text/plain&#x22;});
+    res.end(err.stack + &#x22;\n&#x22;);
+    return;
+  }
+  res.writeHead(404, {&#x22;Content-Type&#x22;: &#x22;text/plain&#x22;});
+  res.end(&#x22;Not Found\n&#x22;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.stack.mount" id="apidoc.element.stack.mount">
+        function <span class="apidocSignatureSpan">stack.</span>mount
+        <span class="apidocSignatureSpan">(mountpoint)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function mount(mountpoint) {
+
+  var stack = Stack.compose.apply(null, Array.prototype.slice.call(arguments, 1));
+
+  if (mountpoint.substr(mountpoint.length - 1) == &#x22;/&#x22;) {
+    mountpoint = mountpoint.substr(0, mountpoint.length - 1);
+  }
+
+  var matchpoint = mountpoint + &#x22;/&#x22;;
+
+  return function (req, res, next) {
+    var url = req.url;
+    var uri = req.uri;
+
+    if (url.substr(0, matchpoint.length) !== matchpoint) { return next(); }
+
+    // Modify the url
+    if (!req.realUrl) { req.realUrl = url; }
+
+    req.url = url.substr(mountpoint.length);
+    if (req.uri) { req.uri = Url.parse(req.url); }
+
+    stack(req, res, function (err) {
+      req.url = url;
+      req.uri = uri;
+      next(err)
+    });
+
+  };
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.stack.toString" id="apidoc.element.stack.toString">
+        function <span class="apidocSignatureSpan">stack.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.stack.compose" id="apidoc.module.stack.compose">module stack.compose</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.stack.compose.compose" id="apidoc.element.stack.compose.compose">
+        function <span class="apidocSignatureSpan">stack.</span>compose
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function compose() {
+  // Don&#x27;t bother composing singletons
+  if (arguments.length == 1) { return arguments[0]; }
+
+  var stack = core;
+  Array.prototype.slice.call(arguments).reverse().forEach(function (layer) {
+
+    var child = stack;
+    stack = function (req, res, next) {
+      try {
+        layer(req, res, function (err) {
+          if (err) { return next(err); }
+          child(req, res, next);
+        });
+      } catch (err) {
+        next(err);
+      }
+    };
+
+  });
+
+  return stack;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.stack.errorHandler" id="apidoc.module.stack.errorHandler">module stack.errorHandler</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.stack.errorHandler.errorHandler" id="apidoc.element.stack.errorHandler.errorHandler">
+        function <span class="apidocSignatureSpan">stack.</span>errorHandler
+        <span class="apidocSignatureSpan">(req, res, err)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function error(req, res, err) {
+  if (err) {
+    console.error(err.stack);
+    res.writeHead(500, {&#x22;Content-Type&#x22;: &#x22;text/plain&#x22;});
+    res.end(err.stack + &#x22;\n&#x22;);
+    return;
+  }
+  res.writeHead(404, {&#x22;Content-Type&#x22;: &#x22;text/plain&#x22;});
+  res.end(&#x22;Not Found\n&#x22;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.stack.mount" id="apidoc.module.stack.mount">module stack.mount</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.stack.mount.mount" id="apidoc.element.stack.mount.mount">
+        function <span class="apidocSignatureSpan">stack.</span>mount
+        <span class="apidocSignatureSpan">(mountpoint)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function mount(mountpoint) {
+
+  var stack = Stack.compose.apply(null, Array.prototype.slice.call(arguments, 1));
+
+  if (mountpoint.substr(mountpoint.length - 1) == &#x22;/&#x22;) {
+    mountpoint = mountpoint.substr(0, mountpoint.length - 1);
+  }
+
+  var matchpoint = mountpoint + &#x22;/&#x22;;
+
+  return function (req, res, next) {
+    var url = req.url;
+    var uri = req.uri;
+
+    if (url.substr(0, matchpoint.length) !== matchpoint) { return next(); }
+
+    // Modify the url
+    if (!req.realUrl) { req.realUrl = url; }
+
+    req.url = url.substr(mountpoint.length);
+    if (req.uri) { req.uri = Url.parse(req.url); }
+
+    stack(req, res, function (err) {
+      req.url = url;
+      req.uri = uri;
+      next(err)
+    });
+
+  };
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.stack.toString" id="apidoc.module.stack.toString">module stack.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.stack.toString.toString" id="apidoc.element.stack.toString.toString">
+        function <span class="apidocSignatureSpan">stack.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
