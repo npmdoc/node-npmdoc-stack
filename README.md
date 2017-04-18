@@ -1,4 +1,7 @@
-# api documentation for  [stack (v0.1.0)](https://github.com/creationix/stack#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-stack.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-stack) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-stack.svg)](https://travis-ci.org/npmdoc/node-npmdoc-stack)
+# npmdoc-stack
+
+#### api documentation for  [stack (v0.1.0)](https://github.com/creationix/stack#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-stack.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-stack) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-stack.svg)](https://travis-ci.org/npmdoc/node-npmdoc-stack)
+
 #### Stack is a minimal http module system for node.js
 
 [![NPM](https://nodei.co/npm/stack.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/stack)
